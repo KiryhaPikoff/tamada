@@ -3,7 +3,17 @@ pipeline {
   stages {
     stage('Cloning Git') {
       steps {
-        git 'https://github.com/gustavoapolinario/microservices-node-example-todo-frontend.git'
+        git 'https://github.com/KiryhaPikoff/tamada'
+      }
+    }
+    stage('Build application') {
+      steps {
+        sh "docker-composer build"
+      }
+    }
+    stage('Up application') {
+      steps {
+        sh "docker-compose up -d"
       }
     }
   }
