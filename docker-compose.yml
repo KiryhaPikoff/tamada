@@ -11,7 +11,7 @@ services:
       - 50035:5432
 
   tamada-service:
-    image:
+    build: .
     container_name: tamada-service
     restart: always
     ports:
