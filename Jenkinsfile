@@ -8,7 +8,7 @@ pipeline {
     }
     stage('Build application') {
       steps {
-        sh "docker-composer build"
+        sh "docker-compose build"
       }
     }
     stage('Up application') {
