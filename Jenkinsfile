@@ -8,12 +8,7 @@ pipeline {
     }
     stage('Build application') {
       steps {
-        sh "docker-compose build"
-      }
-    }
-    stage('Up application') {
-      steps {
-        sh "docker-compose up -d"
+        docker.build('tamada-service')
       }
     }
   }
