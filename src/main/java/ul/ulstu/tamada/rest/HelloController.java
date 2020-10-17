@@ -14,6 +14,6 @@ public class HelloController {
     @GetMapping("/hello")
     public ResponseEntity<String> getHello()
     {
-        return new ResponseEntity<>("Hello from tamada backend!", HttpStatus.OK);
+        return new ResponseEntity<>("Hello from tamada  backend!", HttpStatus.OK);
     }
 }
