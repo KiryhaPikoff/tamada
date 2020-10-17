@@ -9,6 +9,10 @@ services:
       - /data/postgres:/var/lib/postgresql/data
     ports:
       - 50035:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tamada-db
 
   tamada-service:
     build: .
