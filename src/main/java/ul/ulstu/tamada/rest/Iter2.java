@@ -13,6 +13,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class Iter2 {
 
+    private Integer iteration;
+
     private BigDecimal x1;
     private BigDecimal x2;
     private BigDecimal x3;

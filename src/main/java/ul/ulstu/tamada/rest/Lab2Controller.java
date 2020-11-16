@@ -30,8 +30,7 @@ public class Lab2Controller {
         var preobraz = new BigDecimal[4][5];
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
-                preobraz[i][j] = MATRIX[i][j].divide(j == 4 ? MATRIX[i][i] : MATRIX[i][i].negate(), RoundingMode.DOWN)
-                        .setScale(MATRIX[0][0].scale() + 1);
+                preobraz[i][j] = MATRIX[i][j].divide(j == 4 ? MATRIX[i][i] : MATRIX[i][i].negate(), 6, RoundingMode.DOWN);
             }
         }
         response.setPreobraz(preobraz);
@@ -84,16 +83,19 @@ public class Lab2Controller {
 
         );
         nullIter.setNorma(this.max(nullIter.getR1(), nullIter.getR2(), nullIter.getR3(), nullIter.getR4()).setScale(e.scale(), RoundingMode.DOWN));
+        nullIter.setIteration(0);
         iterations.add(nullIter);
 
+        var iterNum = 1;
         var last = 3;
+        var maxAbs = nullIter.getNorma();
         while (iterations.getLast().getNorma().compareTo(e) != -1) {
             var iter = new Iter2();
 
-            iter.setX1(last == 1 ? iterations.getLast().getX1().add(iterations.getLast().getR1()).setScale(e.scale(), RoundingMode.DOWN) : iterations.getLast().getX1());
-            iter.setX2(last == 2 ? iterations.getLast().getX2().add(iterations.getLast().getR2()).setScale(e.scale(), RoundingMode.DOWN) : iterations.getLast().getX2());
-            iter.setX3(last == 3 ? iterations.getLast().getX3().add(iterations.getLast().getR3()).setScale(e.scale(), RoundingMode.DOWN) : iterations.getLast().getX3());
-            iter.setX4(last == 4 ? iterations.getLast().getX4().add(iterations.getLast().getR4()).setScale(e.scale(), RoundingMode.DOWN) : iterations.getLast().getX4());
+            iter.setX1(last == 1 ? iterations.getLast().getX1().add(maxAbs).setScale(e.scale(), RoundingMode.DOWN) : iterations.getLast().getX1());
+            iter.setX2(last == 2 ? iterations.getLast().getX2().add(maxAbs).setScale(e.scale(), RoundingMode.DOWN) : iterations.getLast().getX2());
+            iter.setX3(last == 3 ? iterations.getLast().getX3().add(maxAbs).setScale(e.scale(), RoundingMode.DOWN) : iterations.getLast().getX3());
+            iter.setX4(last == 4 ? iterations.getLast().getX4().add(maxAbs).setScale(e.scale(), RoundingMode.DOWN) : iterations.getLast().getX4());
 
             iter.setR1(last == 1 ? BigDecimal.ZERO :
                     _nevyazki[0][0]
@@ -128,13 +130,76 @@ public class Lab2Controller {
 
             );
             var max = this.max(iter.getR1(), iter.getR2(), iter.getR3(), iter.getR4());
-            if (max.compareTo(iter.getR1()) == 0) last = 1;
-            if (max.compareTo(iter.getR2()) == 0) last = 2;
-            if (max.compareTo(iter.getR3()) == 0) last = 3;
-            if (max.compareTo(iter.getR4()) == 0) last = 4;
+            maxAbs = this.maxAbs(iter.getR1(), iter.getR2(), iter.getR3(), iter.getR4());
+            if (maxAbs.compareTo(iter.getR1().abs()) == 0) {
+                last = 1;
+                maxAbs = iter.getR1();
+            }
+            if (maxAbs.compareTo(iter.getR2().abs()) == 0) {
+                last = 2;
+                maxAbs = iter.getR2();
+            }
+            if (maxAbs.compareTo(iter.getR3().abs()) == 0) {
+                last = 3;
+                maxAbs = iter.getR3();
+            }
+            if (maxAbs.compareTo(iter.getR4().abs()) == 0) {
+                last = 4;
+                maxAbs = iter.getR4();
+            }
             iter.setNorma(max);
+            iter.setIteration(iterNum++);
             iterations.add(iter);
         }
+
+        var iter = new Iter2();
+
+        iter.setX1(last == 1 ? iterations.getLast().getX1().add(maxAbs).setScale(e.scale(), RoundingMode.DOWN) : iterations.getLast().getX1());
+        iter.setX2(last == 2 ? iterations.getLast().getX2().add(maxAbs).setScale(e.scale(), RoundingMode.DOWN) : iterations.getLast().getX2());
+        iter.setX3(last == 3 ? iterations.getLast().getX3().add(maxAbs).setScale(e.scale(), RoundingMode.DOWN) : iterations.getLast().getX3());
+        iter.setX4(last == 4 ? iterations.getLast().getX4().add(maxAbs).setScale(e.scale(), RoundingMode.DOWN) : iterations.getLast().getX4());
+
+        iter.setR1(last == 1 ? BigDecimal.ZERO :
+                _nevyazki[0][0]
+                        .subtract(iter.getX1())
+                        .add(_nevyazki[0][1].multiply(iter.getX2()))
+                        .add(_nevyazki[0][2].multiply(iter.getX3()))
+                        .add(_nevyazki[0][3].multiply(iter.getX4()))
+
+        );
+        iter.setR2(last == 2 ? BigDecimal.ZERO :
+                _nevyazki[1][0]
+                        .subtract(iter.getX2())
+                        .add(_nevyazki[1][1].multiply(iter.getX1()))
+                        .add(_nevyazki[1][2].multiply(iter.getX3()))
+                        .add(_nevyazki[1][3].multiply(iter.getX4()))
+
+        );
+        iter.setR3(last == 3 ? BigDecimal.ZERO :
+                _nevyazki[2][0]
+                        .subtract(iter.getX3())
+                        .add(_nevyazki[2][1].multiply(iter.getX1()))
+                        .add(_nevyazki[2][2].multiply(iter.getX2()))
+                        .add(_nevyazki[2][3].multiply(iter.getX4()))
+
+        );
+        iter.setR4(last == 4 ? BigDecimal.ZERO :
+                _nevyazki[3][0]
+                        .subtract(iter.getX4())
+                        .add(_nevyazki[3][1].multiply(iter.getX1()))
+                        .add(_nevyazki[3][2].multiply(iter.getX2()))
+                        .add(_nevyazki[3][3].multiply(iter.getX3()))
+
+        );
+        var max = this.max(iter.getR1(), iter.getR2(), iter.getR3(), iter.getR4());
+        if (max.compareTo(iter.getR1()) == 0) last = 1;
+        if (max.compareTo(iter.getR2()) == 0) last = 2;
+        if (max.compareTo(iter.getR3()) == 0) last = 3;
+        if (max.compareTo(iter.getR4()) == 0) last = 4;
+        iter.setNorma(max);
+        iter.setIteration(iterNum++);
+        maxAbs = this.maxAbs(iter.getR1(), iter.getR2(), iter.getR3(), iter.getR4());
+        iterations.add(iter);
 
         response.setIterations(iterations);
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -144,5 +209,12 @@ public class Lab2Controller {
         var m1 = Math.max(r1.doubleValue(), r2.doubleValue());
         var m2 = Math.max(m1, r3.doubleValue());
         return BigDecimal.valueOf(Math.max(m2, r4.doubleValue()));
+    }
+
+    private BigDecimal maxAbs(BigDecimal r1, BigDecimal r2, BigDecimal r3, BigDecimal r4) {
+        var m1 = Math.max(r1.abs().doubleValue(), r2.abs().doubleValue());
+        var m2 = Math.max(m1, r3.abs().doubleValue());
+        var mabs = BigDecimal.valueOf(Math.max(m2, r4.abs().doubleValue()));
+        return mabs;
     }
 }
