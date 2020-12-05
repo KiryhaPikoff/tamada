@@ -20,6 +20,3 @@ services:
     restart: always
     ports:
       - 50040:50040
-    environment:
-      JKS: ${JKS}
-      PROD_SECURE_PROPS: ${PROD_SECURE_PROPS}

@@ -6,13 +6,19 @@ pipeline {
         git 'https://github.com/KiryhaPikoff/tamada'
       }
     }
+    stage('JKS copying') {
+      steps {
+        sh "cp /home/pikov_kirya/tmd-keys.jks src/main/java/resources/jks"
+      }
+    }
+    stage('application-prod.properties copying') {
+      steps {
+        sh "cp /home/pikov_kirya/application-prod.properties src/main/java/resources"
+      }
+    }
     stage('Build application') {
       steps {
-        sh """
-            sudo docker-compose build --build-arg \
-                JKS=/home/pikov_kirya/tmd-keys.jks \
-                PROD_SECURE_PROPS=/home/pikov_kirya/application-prod.properties
-           """
+        sh "sudo docker-compose build"
       }
     }
     stage('Up application') {
