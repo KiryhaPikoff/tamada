@@ -8,12 +8,12 @@ pipeline {
     }
     stage('JKS copying') {
       steps {
-        sh "sudo cp /home/pikov_kirya/tmd-keys.jks /src/main/java/resources/jks"
+        sh "sudo cp /home/pikov_kirya/tmd-keys.jks /src/main/resources/jks"
       }
     }
     stage('application-prod.properties copying') {
       steps {
-        sh "sudo cp /home/pikov_kirya/application-prod.properties src/main/java/resources"
+        sh "sudo cp /home/pikov_kirya/application-prod.properties /src/main/resources"
       }
     }
     stage('Build application') {
