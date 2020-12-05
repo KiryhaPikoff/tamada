@@ -36,7 +36,7 @@ public class ResponseLoggingInterceptor implements ResponseBodyAdvice<Object> {
                 log.info(System.lineSeparator() +
                         "[RESPONSE]" + System.lineSeparator() +
                         "[CONTENT_TYPE] " + mediaType + System.lineSeparator() +
-                        "[RESPONSE_ON_METHOD" + serverHttpRequest.getMethod() + "] " + serverHttpRequest.getURI() + System.lineSeparator() +
+                        "[" + serverHttpRequest.getMethod() + "] " + serverHttpRequest.getURI() + System.lineSeparator() +
                         (isJsonOrText ? "[RESPONSE_BODY] " + objectMapper.writeValueAsString(responseObject) : ""));
             } catch (Exception exception) {
                 log.error("Couldn't write response body, cause:", exception);
