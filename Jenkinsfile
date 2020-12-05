@@ -8,6 +8,8 @@ pipeline {
     }
     stage('JKS copying') {
       steps {
+        sh "pwd"
+        sh "ls"
         sh "sudo cp /home/pikov_kirya/tmd-keys.jks /src/main/resources/jks"
       }
     }
