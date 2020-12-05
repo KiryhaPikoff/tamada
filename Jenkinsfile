@@ -8,7 +8,7 @@ pipeline {
     }
     stage('JKS copying') {
       steps {
-        sh "sudo cp /home/pikov_kirya/tmd-keys.jks src/main/java/resources/jks"
+        sh "sudo cp /home/pikov_kirya/tmd-keys.jks /src/main/java/resources/jks"
       }
     }
     stage('application-prod.properties copying') {
