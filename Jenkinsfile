@@ -4,6 +4,7 @@ pipeline {
     stage('Cloning Git') {
       steps {
         git 'https://github.com/KiryhaPikoff/tamada'
+        sh "chmod 777 ."
       }
     }
     stage('JKS copying') {
