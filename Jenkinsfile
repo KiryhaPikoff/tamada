@@ -10,12 +10,12 @@ pipeline {
       steps {
         sh "pwd"
         sh "ls"
-        sh "sudo cp /home/pikov_kirya/tmd-keys.jks /src/main/resources/jks/"
+        sh "sudo cp /home/pikov_kirya/tmd-keys.jks ./src/main/resources/jks/"
       }
     }
     stage('application-prod.properties copying') {
       steps {
-        sh "sudo cp /home/pikov_kirya/application-prod.properties /src/main/resources/"
+        sh "sudo cp /home/pikov_kirya/application-prod.properties ./src/main/resources/"
       }
     }
     stage('Build application') {
