@@ -30,7 +30,7 @@ public class RequestLoggingInterceptor extends HandlerInterceptorAdapter {
         request.getHeaderNames().asIterator()
                 .forEachRemaining(
                         headerName -> headers.append(
-                                String.format("%s : %s\n", request.getHeader(headerName))
+                                String.format("%s : %s\n", headerName, request.getHeader(headerName))
                         )
                 );
 
