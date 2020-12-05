@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Ignore prod properties, only for local editing, takes from server. ###
+src/main/resources/application-prod.properties
