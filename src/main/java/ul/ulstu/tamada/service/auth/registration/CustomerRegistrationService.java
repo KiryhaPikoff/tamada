@@ -1,6 +1,7 @@
 package ul.ulstu.tamada.service.auth.registration;
 
 import org.springframework.core.convert.ConversionService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ul.ulstu.tamada.exception.UserAlreadyExistsException;
@@ -19,18 +20,19 @@ public class CustomerRegistrationService implements IRegistrationService {
     private final ConversionService conversionService;
     private final IOtpService otpService;
     private final ISmsService smsService;
-
-    private final static String MESSAGE_TEMPLATE = "Ваш код для регистрации в Tamada: %s";
+    private final PasswordEncoder passwordEncoder;
 
     public CustomerRegistrationService(
             IUserRepository userRepository,
             ConversionService conversionService,
             IOtpService otpService,
-            ISmsService smsService) {
+            ISmsService smsService,
+            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.conversionService = conversionService;
         this.otpService = otpService;
         this.smsService = smsService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -42,13 +44,17 @@ public class CustomerRegistrationService implements IRegistrationService {
             throw new UserAlreadyExistsException(registrationRequest.getPhone());
         }
 
+        customer.setPassword(
+                passwordEncoder.encode(registrationRequest.getPassword())
+        );
+
         userRepository.save(customer);
 
         var otp = otpService.getOtp(registrationRequest.getPhone());
 
         var smsDto = new SmsDto();
         smsDto.setPhone(registrationRequest.getPhone());
-        smsDto.setMessage(String.format(MESSAGE_TEMPLATE, otp.getCode()));
+        smsDto.setMessage(String.format("Ваш код для регистрации в Tamada: %s", otp.getCode()));
 
         smsService.sendSms(smsDto);
 

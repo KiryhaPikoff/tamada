@@ -29,6 +29,6 @@ public class SmscClient implements ISmscClient {
         requestMap.put("phone", smsDto.getPhone());
         requestMap.put("message", smsDto.getMessage());
 
-        restTemplate.postForObject(smsServiceProperties.getSmscApiUrl(), HttpEntity.EMPTY, Void.class, requestMap);
+        restTemplate.postForObject(smsServiceProperties.getSmscApiUrl(), HttpEntity.EMPTY, String.class, requestMap);
     }
 }

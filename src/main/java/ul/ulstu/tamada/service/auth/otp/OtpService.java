@@ -9,7 +9,10 @@ public class OtpService implements IOtpService {
 
     @Override
     public OtpDto getOtp(String phone) {
-        return null;
+        var otp = new OtpDto();
+        otp.setCode("1234");
+        otp.setOtpId(555L);
+        return otp;
     }
 
     @Override
