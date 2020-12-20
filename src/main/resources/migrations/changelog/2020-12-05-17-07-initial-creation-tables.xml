@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="20201205-1708" author="pikov_kirya@mail.ru">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="otp_codes_seq" />
+            </not>
+        </preConditions>
+        <comment>Otp codes id sequence</comment>
+        <createSequence
+                incrementBy="1"
+                startValue="1"
+                minValue="1"
+                sequenceName="otp_codes_seq" />
+    </changeSet>
+
+    <changeSet id="20201205-1709" author="pikov_kirya@mail.ru">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="otp_codes" />
+            </not>
+        </preConditions>
+        <comment>Create OTP codes table</comment>
+        <createTable tableName="otp_codes">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="otp_codes_pk"/>
+            </column>
+            <column name="phone" type="varchar(10)"/>
+            <column name="code" type="varchar(10)"/>
+            <column name="block_until" type="timestamp"/>
+            <column name="available_attempts" type="int"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

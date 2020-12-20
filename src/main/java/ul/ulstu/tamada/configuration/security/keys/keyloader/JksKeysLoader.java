@@ -18,7 +18,6 @@ public class JksKeysLoader implements IKeysLoader {
 
     @Value("${jwt.sign-key-password}")
     private String signKeyPassword;
-    private KeyStore keystore;
     private final static String ALIAS = "TMD";
 
     @SneakyThrows
@@ -26,8 +25,8 @@ public class JksKeysLoader implements IKeysLoader {
     private void loadKeys() {
         char[] password = signKeyPassword.toCharArray();
         var jks = getClass().getClassLoader().getResourceAsStream("jks/tmd-keys.jks");
-        this.keystore = KeyStore.getInstance(KeyStore.getDefaultType());
-        this.keystore.load(jks, password);
+        var keystore = KeyStore.getInstance(KeyStore.getDefaultType());
+        keystore.load(jks, password);
 
         privateKey = (PrivateKey) keystore.getKey(ALIAS, password);
         publicKey  = keystore.getCertificate(ALIAS).getPublicKey();

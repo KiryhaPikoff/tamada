@@ -34,3 +34,4 @@ build/
 
 ### Ignore prod properties, only for local editing, takes from server. ###
 src/main/resources/application-prod.properties
+src/main/resources/jks/tmd-keys.jks
