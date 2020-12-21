@@ -49,4 +49,15 @@
         <modifyDataType tableName="customers" columnName="login" newDataType="varchar(12)"/>
     </changeSet>
 
+    <changeSet id="20201221-1151" author="pikov_kirya@mail.ru">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="admins"/>
+                <columnExists tableName="admins" columnName="login"/>
+            </and>
+        </preConditions>
+        <comment>Table phone name column increase size</comment>
+        <modifyDataType tableName="admins" columnName="login" newDataType="varchar(12)"/>
+    </changeSet>
+
 </databaseChangeLog>
