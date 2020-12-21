@@ -11,8 +11,4 @@ import javax.persistence.Table;
 public class Customer extends User {
 
     private String name;
-
-    private String surname;
-
-    private String patronymic;
 }

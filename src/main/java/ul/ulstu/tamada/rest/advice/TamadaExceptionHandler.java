@@ -14,6 +14,7 @@ public class TamadaExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> internalServerError(Throwable exception) {
         log.error(String.format("internalServerError class: %s  message: %s", exception.getClass().getName(), exception.getMessage()));
+        log.error(exception);
         var response = createErrorResponse(exception);
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }

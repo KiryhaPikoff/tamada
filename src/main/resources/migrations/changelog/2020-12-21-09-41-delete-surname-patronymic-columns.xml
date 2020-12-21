@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="20201221-0944" author="pikov_kirya@mail.ru">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="customers"/>
+                <columnExists tableName="customers" columnName="surname"/>
+            </and>
+        </preConditions>
+        <comment>Delete surname column in customers table</comment>
+        <dropColumn tableName="customers" columnName="surname"/>
+    </changeSet>
+
+    <changeSet id="20201221-0945" author="pikov_kirya@mail.ru">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="customers"/>
+                <columnExists tableName="customers" columnName="patronymic"/>
+            </and>
+        </preConditions>
+        <comment>Delete patronymic column in customers table</comment>
+        <dropColumn tableName="customers" columnName="patronymic"/>
+    </changeSet>
+
+    <changeSet id="20201221-0946" author="pikov_kirya@mail.ru">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="customers"/>
+                <columnExists tableName="customers" columnName="name"/>
+            </and>
+        </preConditions>
+        <comment>Table customers name column increase size</comment>
+        <modifyDataType tableName="customers" columnName="name" newDataType="varchar(80)"/>
+    </changeSet>
+
+    <changeSet id="20201221-1055" author="pikov_kirya@mail.ru">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="customers"/>
+                <columnExists tableName="customers" columnName="login"/>
+            </and>
+        </preConditions>
+        <comment>Table phone name column increase size</comment>
+        <modifyDataType tableName="customers" columnName="login" newDataType="varchar(12)"/>
+    </changeSet>
+
+</databaseChangeLog>

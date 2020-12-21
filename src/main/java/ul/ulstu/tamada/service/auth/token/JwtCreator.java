@@ -30,14 +30,19 @@ public class JwtCreator implements ITokenCreator {
     @SneakyThrows
     public String createToken(TokenParameters parameters) {
         var uuid = UUID.randomUUID();
-        var expires = Calendar.getInstance();
-        expires.add(Calendar.MINUTE, parameters.getExpiredInMinutes());
 
         var signer = new RSASSASigner(keysLoader.getPrivateKey());
         var claims = new JWTClaimsSet.Builder()
                 .subject(parameters.getIdent())
                 .jwtID(uuid.toString())
-                .expirationTime(expires.getTime())
+                .expirationTime(
+                        Date.from(
+                                LocalDateTime.now()
+                                        .atZone(ZoneId.systemDefault())
+                                        .plusMinutes(parameters.getExpiredInMinutes())
+                                        .toInstant()
+                        )
+                )
                 .claim(ROLE_CLAIM_NAME, parameters.getRole())
                 .issueTime(
                         Date.from(

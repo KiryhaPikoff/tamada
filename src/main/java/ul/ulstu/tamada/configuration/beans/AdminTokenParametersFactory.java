@@ -22,7 +22,7 @@ public class AdminTokenParametersFactory implements ITokenParametersFactory {
     @Override
     public TokenParameters accessTokenParameters() {
         return TokenParameters.builder()
-                .role(UserRole.Names.CUSTOMER)
+                .role(UserRole.Names.ADMIN)
                 .expiredInMinutes(tokenProperties.getAccessTokenValidMinutes())
                 .claims(Collections.emptyMap())
                 .build();
@@ -31,7 +31,7 @@ public class AdminTokenParametersFactory implements ITokenParametersFactory {
     @Override
     public TokenParameters refreshTokenParameters() {
         return TokenParameters.builder()
-                .role(UserRole.Names.CUSTOMER)
+                .role(UserRole.Names.ADMIN)
                 .expiredInMinutes(tokenProperties.getRefreshTokenValidMinutes())
                 .claims(Collections.emptyMap())
                 .build();

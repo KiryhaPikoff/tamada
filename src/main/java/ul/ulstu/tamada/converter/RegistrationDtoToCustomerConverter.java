@@ -14,8 +14,6 @@ public class RegistrationDtoToCustomerConverter extends BaseConverter<Registrati
         customer.setLogin(registrationRequest.getPhone());
         customer.setPassword(registrationRequest.getPassword());
         customer.setName(registrationRequest.getName());
-        customer.setSurname(registrationRequest.getSurname());
-        customer.setPatronymic(registrationRequest.getPatronymic());
 
         return customer;
     }

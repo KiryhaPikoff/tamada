@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ul.ulstu.tamada.rest.dto.CheckCodeRequest;
-import ul.ulstu.tamada.rest.dto.RegistrationRequest;
-import ul.ulstu.tamada.rest.dto.RegistrationResponse;
+import ul.ulstu.tamada.rest.dto.*;
 import ul.ulstu.tamada.service.IAuthenticationFacade;
 
 @Log4j2
@@ -36,9 +34,28 @@ public class AuthController {
 
     @PostMapping("/check-code")
     @ApiOperation("Проверка ОТП кода")
-    public ResponseEntity<?> checkCode(
+    public ResponseEntity<TokenPairDto> checkCode(
             @RequestBody CheckCodeRequest checkCodeRequest
     ) {
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/tokens")
+    @ApiOperation("Запрос на получение токенов по логину/паролю с указанием необходимой роли")
+    public ResponseEntity<TokenPairDto> getTokensByCreds(
+            @RequestBody CredentialsDto credentialsDto
+    ) {
+        var tokens = authenticationFacade.getTokenPair(credentialsDto);
+        return ResponseEntity.ok(tokens);
+    }
+
+    @PostMapping("/refresh")
+    @ApiOperation("Запрос на получение токенов по refresh токену")
+    public ResponseEntity<TokenPairDto> getTokensByRefresh(
+            @RequestBody RefreshTokenDto refreshTokenDto
+    ) {
+        var refreshToken = refreshTokenDto.getRefresh();
+        var tokens = authenticationFacade.getTokenPairByRefresh(refreshToken);
+        return ResponseEntity.ok(tokens);
     }
 }
