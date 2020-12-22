@@ -9,14 +9,8 @@ public class RegistrationRequest {
     @ApiModelProperty("Номер телефона пользователя")
     private String phone;
 
-    @ApiModelProperty("Имя пользователя")
+    @ApiModelProperty("ФИО пользователя")
     private String name;
-
-    @ApiModelProperty("Фамилия пользователя")
-    private String surname;
-
-    @ApiModelProperty("Отчество пользователя")
-    private String patronymic;
 
     @ApiModelProperty("Пароль пользователя")
     private String password;

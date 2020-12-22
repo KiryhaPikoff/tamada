@@ -10,7 +10,7 @@ public class RoleToAuthRoleConverter extends BaseConverter<String, UserRole> {
     @Override
     public UserRole convert(String role) {
         try {
-            return UserRole.valueOf(role);
+            return UserRole.valueOf(role.toUpperCase());
         } catch (Exception exception) {
             throw new UserRoleNotFoundException(role);
         }

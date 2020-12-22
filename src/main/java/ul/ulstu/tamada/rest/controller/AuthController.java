@@ -35,9 +35,10 @@ public class AuthController {
     @PostMapping("/check-code")
     @ApiOperation("Проверка ОТП кода")
     public ResponseEntity<TokenPairDto> checkCode(
-            @RequestBody CheckCodeRequest checkCodeRequest
+            @RequestBody CheckOtpDto checkOtpDto
     ) {
-        return ResponseEntity.ok().build();
+        var tokens = authenticationFacade.checkCode(checkOtpDto);
+        return ResponseEntity.ok(tokens);
     }
 
     @PostMapping("/tokens")

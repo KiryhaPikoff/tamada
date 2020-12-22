@@ -4,9 +4,11 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import ul.ulstu.tamada.configuration.enums.UserRole;
+import ul.ulstu.tamada.exception.TokenNotValidException;
 import ul.ulstu.tamada.rest.dto.*;
 import ul.ulstu.tamada.service.auth.jwt.IJwtService;
 import ul.ulstu.tamada.service.auth.jwtextractor.IJwtExtractor;
+import ul.ulstu.tamada.service.auth.otp.IOtpService;
 import ul.ulstu.tamada.service.auth.registration.IRegistrationService;
 
 @Log4j2
@@ -18,6 +20,7 @@ public class AuthenticationFacade implements IAuthenticationFacade {
     private final IJwtService adminJwtService;
     private final ConversionService conversionService;
     private final IJwtExtractor jwtExtractor;
+    private final IOtpService otpService;
 
     private final static String ROLE_CLAIM_NAME = "role";
 
@@ -26,13 +29,15 @@ public class AuthenticationFacade implements IAuthenticationFacade {
             IJwtService customerJwtService,
             IJwtService adminJwtService,
             ConversionService conversionService,
-            IJwtExtractor jwtExtractor
+            IJwtExtractor jwtExtractor,
+            IOtpService otpService
     ) {
         this.registrationService = registrationService;
         this.customerJwtService = customerJwtService;
         this.adminJwtService = adminJwtService;
         this.conversionService = conversionService;
         this.jwtExtractor = jwtExtractor;
+        this.otpService = otpService;
     }
 
     @Override
@@ -43,7 +48,9 @@ public class AuthenticationFacade implements IAuthenticationFacade {
 
     @Override
     public TokenPairDto checkCode(CheckOtpDto checkOtpDto) {
-        return null;
+        otpService.checkOtp(checkOtpDto);
+        var tokens = customerJwtService.getTokenPairByIdent(checkOtpDto.getPhone());
+        return tokens;
     }
 
     @Override
@@ -69,7 +76,13 @@ public class AuthenticationFacade implements IAuthenticationFacade {
 
     @Override
     public TokenPairDto getTokenPairByRefresh(String refreshToken) {
-        var role = jwtExtractor.getClaim(refreshToken, ROLE_CLAIM_NAME);
+        var roleOpt = jwtExtractor.getClaim(refreshToken, ROLE_CLAIM_NAME);
+
+        if (roleOpt.isEmpty()) {
+            throw new TokenNotValidException();
+        }
+
+        var role = roleOpt.get();
         var userRole = conversionService.convert(role, UserRole.class);
 
         TokenPairDto tokens = null;

@@ -7,7 +7,7 @@ public class CheckOtpDto {
 
     private String phone;
 
-    private String otpId;
+    private Long codeId;
 
     private String code;
 }
