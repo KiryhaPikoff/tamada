@@ -10,8 +10,8 @@ import ul.ulstu.tamada.exception.TokenNotValidException;
 import ul.ulstu.tamada.model.User;
 import ul.ulstu.tamada.model.UserType;
 import ul.ulstu.tamada.repository.IUserRepository;
-import ul.ulstu.tamada.rest.dto.CredentialsDto;
-import ul.ulstu.tamada.rest.dto.TokenPairDto;
+import ul.ulstu.tamada.rest.dto.auth.CredentialsDto;
+import ul.ulstu.tamada.rest.dto.auth.TokenPairDto;
 import ul.ulstu.tamada.service.auth.jwtextractor.IJwtExtractor;
 import ul.ulstu.tamada.service.auth.token.ITokenCreator;
 

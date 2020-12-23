@@ -1,7 +1,7 @@
 package ul.ulstu.tamada.service.auth.jwt;
 
-import ul.ulstu.tamada.rest.dto.CredentialsDto;
-import ul.ulstu.tamada.rest.dto.TokenPairDto;
+import ul.ulstu.tamada.rest.dto.auth.CredentialsDto;
+import ul.ulstu.tamada.rest.dto.auth.TokenPairDto;
 
 public interface IJwtService {
 

@@ -1,5 +1,8 @@
 package ul.ulstu.tamada.configuration.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum UserRole {
 
     CUSTOMER(Names.CUSTOMER),

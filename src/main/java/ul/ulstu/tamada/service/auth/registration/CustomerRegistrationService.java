@@ -7,9 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ul.ulstu.tamada.exception.UserAlreadyExistsException;
 import ul.ulstu.tamada.model.Customer;
 import ul.ulstu.tamada.repository.IUserRepository;
-import ul.ulstu.tamada.rest.dto.RegistrationRequest;
-import ul.ulstu.tamada.rest.dto.RegistrationResponse;
-import ul.ulstu.tamada.rest.dto.SmsDto;
+import ul.ulstu.tamada.rest.dto.auth.RegistrationRequest;
+import ul.ulstu.tamada.rest.dto.auth.RegistrationResponse;
+import ul.ulstu.tamada.rest.dto.auth.SmsDto;
 import ul.ulstu.tamada.service.auth.otp.IOtpService;
 import ul.ulstu.tamada.service.sms.ISmsService;
 

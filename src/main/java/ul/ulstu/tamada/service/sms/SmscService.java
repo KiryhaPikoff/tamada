@@ -2,7 +2,7 @@ package ul.ulstu.tamada.service.sms;
 
 import org.springframework.stereotype.Service;
 import ul.ulstu.tamada.client.ISmscClient;
-import ul.ulstu.tamada.rest.dto.SmsDto;
+import ul.ulstu.tamada.rest.dto.auth.SmsDto;
 
 @Service
 public class SmscService implements ISmsService {

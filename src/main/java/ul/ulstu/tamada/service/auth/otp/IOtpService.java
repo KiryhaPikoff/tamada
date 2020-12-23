@@ -1,7 +1,7 @@
 package ul.ulstu.tamada.service.auth.otp;
 
-import ul.ulstu.tamada.rest.dto.CheckOtpDto;
-import ul.ulstu.tamada.rest.dto.OtpDto;
+import ul.ulstu.tamada.rest.dto.auth.CheckOtpDto;
+import ul.ulstu.tamada.rest.dto.auth.OtpDto;
 
 public interface IOtpService {
 

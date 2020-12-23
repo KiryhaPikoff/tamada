@@ -1,6 +1,6 @@
 package ul.ulstu.tamada.service;
 
-import ul.ulstu.tamada.rest.dto.*;
+import ul.ulstu.tamada.rest.dto.auth.*;
 
 public interface IAuthenticationFacade {
 

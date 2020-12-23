@@ -1,51 +1,41 @@
 package ul.ulstu.tamada.configuration.logging;
 
 
-import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import ul.ulstu.tamada.configuration.logging.httpcachedbody.CachedBodyHttpServletRequest;
 
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.stream.Collectors;
 
+@Order(1)
 @Log4j2
 @Component
-public class RequestLoggingInterceptor extends HandlerInterceptorAdapter {
+public class RequestLoggingInterceptor implements Filter {
 
-    @SneakyThrows
     @Override
-    public boolean preHandle(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            Object handler) {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        var wrappedRequest = new CachedBodyHttpServletRequest((HttpServletRequest) servletRequest);
 
-        var contentType = request.getHeader("Content-type");
+        var contentType = wrappedRequest.getHeader("Content-type");
         var isJsonOrText = contentType != null && (contentType.contains("json") || contentType.contains("text"));
 
         var headers = new StringBuilder();
-        request.getHeaderNames().asIterator()
+        wrappedRequest.getHeaderNames().asIterator()
                 .forEachRemaining(
                         headerName -> headers.append(
-                                String.format("%s : %s\n", headerName, request.getHeader(headerName))
+                                String.format("%s : %s\n", headerName, wrappedRequest.getHeader(headerName))
                         )
                 );
 
         log.info(System.lineSeparator() +
-                "[" + request.getMethod() + "]" + request.getRequestURI() + System.lineSeparator() +
+                "[" + wrappedRequest.getMethod() + "]" + wrappedRequest.getRequestURI() + System.lineSeparator() +
                 "[HEADERS]" + System.lineSeparator() + headers +
-                (isJsonOrText ? "[REQUEST_BODY]" + request.getReader().lines().collect(Collectors.joining()) : ""));
+                (isJsonOrText ? "[REQUEST_BODY]" + wrappedRequest.getReader().lines().collect(Collectors.joining()) : ""));
 
-        return true;
-    }
-
-    @SneakyThrows
-    @Override
-    public void afterCompletion(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            Object handler,
-            Exception ex) {
+        filterChain.doFilter(wrappedRequest, servletResponse);
     }
 }

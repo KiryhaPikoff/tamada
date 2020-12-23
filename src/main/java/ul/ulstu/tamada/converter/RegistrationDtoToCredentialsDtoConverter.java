@@ -2,8 +2,8 @@ package ul.ulstu.tamada.converter;
 
 import org.springframework.stereotype.Component;
 import ul.ulstu.tamada.configuration.enums.UserRole;
-import ul.ulstu.tamada.rest.dto.CredentialsDto;
-import ul.ulstu.tamada.rest.dto.RegistrationRequest;
+import ul.ulstu.tamada.rest.dto.auth.CredentialsDto;
+import ul.ulstu.tamada.rest.dto.auth.RegistrationRequest;
 
 @Component
 public class RegistrationDtoToCredentialsDtoConverter extends BaseConverter<RegistrationRequest, CredentialsDto> {

@@ -5,7 +5,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import ul.ulstu.tamada.configuration.properties.SmsServiceProperties;
-import ul.ulstu.tamada.rest.dto.SmsDto;
+import ul.ulstu.tamada.rest.dto.auth.SmsDto;
 
 import java.util.HashMap;
 

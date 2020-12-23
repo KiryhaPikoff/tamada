@@ -8,6 +8,8 @@ public interface IJwtExtractor {
 
     Optional<String> getSubject(String token);
 
+    Optional<String> getRole(String token);
+
     Optional<String> getClaim(String token, String claimName);
 
     boolean verify(String token);

@@ -2,8 +2,8 @@ package ul.ulstu.tamada.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -11,4 +11,11 @@ import javax.persistence.Table;
 public class Customer extends User {
 
     private String name;
+
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "customer",
+            cascade = CascadeType.ALL
+    )
+    private List<Order> orders;
 }

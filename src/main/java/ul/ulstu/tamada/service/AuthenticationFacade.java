@@ -5,7 +5,7 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import ul.ulstu.tamada.configuration.enums.UserRole;
 import ul.ulstu.tamada.exception.TokenNotValidException;
-import ul.ulstu.tamada.rest.dto.*;
+import ul.ulstu.tamada.rest.dto.auth.*;
 import ul.ulstu.tamada.service.auth.jwt.IJwtService;
 import ul.ulstu.tamada.service.auth.jwtextractor.IJwtExtractor;
 import ul.ulstu.tamada.service.auth.otp.IOtpService;
@@ -21,8 +21,6 @@ public class AuthenticationFacade implements IAuthenticationFacade {
     private final ConversionService conversionService;
     private final IJwtExtractor jwtExtractor;
     private final IOtpService otpService;
-
-    private final static String ROLE_CLAIM_NAME = "role";
 
     public AuthenticationFacade(
             IRegistrationService registrationService,
@@ -76,7 +74,7 @@ public class AuthenticationFacade implements IAuthenticationFacade {
 
     @Override
     public TokenPairDto getTokenPairByRefresh(String refreshToken) {
-        var roleOpt = jwtExtractor.getClaim(refreshToken, ROLE_CLAIM_NAME);
+        var roleOpt = jwtExtractor.getRole(refreshToken);
 
         if (roleOpt.isEmpty()) {
             throw new TokenNotValidException();

@@ -1,13 +1,10 @@
-package ul.ulstu.tamada.rest.dto;
+package ul.ulstu.tamada.rest.dto.animator;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class AnimatorWithPhotoResponse {
-
-    @ApiModelProperty("Идентификатор аниматора")
-    private Long id;
+public class AnimatorDto {
 
     @ApiModelProperty("ФИО аниматора")
     private String name;
@@ -22,7 +19,7 @@ public class AnimatorWithPhotoResponse {
     private String motto;
 
     @ApiModelProperty("Фотография аниматора в base64")
-    private String image;
+    private byte[] image;
 
     @ApiModelProperty("Цена аниматора за мероприятие")
     private Integer price;

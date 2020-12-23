@@ -5,11 +5,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import ul.ulstu.tamada.exception.TokenNotValidException;
 import ul.ulstu.tamada.rest.dto.ErrorResponse;
 
 @Log4j2
 @ControllerAdvice
 public class TamadaExceptionHandler {
+
+    @ExceptionHandler({
+            TokenNotValidException.class
+    })
+    public ResponseEntity<Void> tokenNotPresentException(TokenNotValidException exception) {
+        log.error(String.format("tokenNotPresentException class: %s  message: %s", exception.getClass().getName(), exception.getMessage()));
+        log.error(exception);
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> internalServerError(Throwable exception) {

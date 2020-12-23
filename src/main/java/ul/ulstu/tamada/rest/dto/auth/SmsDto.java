@@ -1,4 +1,4 @@
-package ul.ulstu.tamada.rest.dto;
+package ul.ulstu.tamada.rest.dto.auth;
 
 import lombok.Data;
 

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="20201223-1017" author="pikov_kirya@mail.ru">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="animators_seq" />
+            </not>
+        </preConditions>
+        <comment>Animators id sequence</comment>
+        <createSequence
+                incrementBy="1"
+                startValue="1"
+                minValue="1"
+                sequenceName="animators_seq" />
+    </changeSet>
+
+    <changeSet id="20201223-1018" author="pikov_kirya@mail.ru">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="orders_seq" />
+            </not>
+        </preConditions>
+        <comment>Orders id sequence</comment>
+        <createSequence
+                incrementBy="1"
+                startValue="1"
+                minValue="1"
+                sequenceName="orders_seq" />
+    </changeSet>
+
+    <changeSet id="20201223-1023" author="pikov_kirya@mail.ru">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="animators" />
+            </not>
+        </preConditions>
+        <comment>Create animators table</comment>
+        <createTable tableName="animators">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="animators_pk"/>
+            </column>
+            <column name="name" type="varchar(80)"/>
+            <column name="age" type="int"/>
+            <column name="description" type="text"/>
+            <column name="motto" type="text"/>
+            <column name="price" type="int"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20201223-1043" author="pikov_kirya@mail.ru">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="orders" />
+            </not>
+        </preConditions>
+        <comment>Create orders table</comment>
+        <createTable tableName="orders">
+            <column name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="orders_pk"/>
+            </column>
+            <column name="date" type="date"/>
+            <column name="animator_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_order_animator_id"
+                             references="animators(id)"/>
+            </column>
+            <column name="customer_id" type="varchar(12)">
+                <constraints nullable="false"
+                             foreignKeyName="fk_order_customer_id"
+                             references="customers(login)"/>
+            </column>
+            <column name="event" type="varchar(40)"/>
+            <column name="status" type="varchar(40)"/>
+            <column name="address" type="varchar(255)"/>
+            <column name="created_at" type="timestamp"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

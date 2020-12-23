@@ -2,8 +2,8 @@ package ul.ulstu.tamada.service.auth.otp;
 
 import org.springframework.stereotype.Service;
 import ul.ulstu.tamada.exception.WrongOtpCodeException;
-import ul.ulstu.tamada.rest.dto.CheckOtpDto;
-import ul.ulstu.tamada.rest.dto.OtpDto;
+import ul.ulstu.tamada.rest.dto.auth.CheckOtpDto;
+import ul.ulstu.tamada.rest.dto.auth.OtpDto;
 
 @Service
 public class OtpService implements IOtpService {

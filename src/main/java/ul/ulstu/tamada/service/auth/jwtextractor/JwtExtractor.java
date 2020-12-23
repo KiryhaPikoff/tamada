@@ -47,6 +47,19 @@ public class JwtExtractor implements IJwtExtractor {
     }
 
     @Override
+    public Optional<String> getRole(String token) {
+        SignedJWT signedJWT;
+        try {
+            signedJWT = SignedJWT.parse(token);
+            var role = (String) signedJWT.getJWTClaimsSet().getClaim("role");
+            return Optional.ofNullable(role);
+        } catch (ParseException pex) {
+            log.error("Token parsing error: ", pex);
+        }
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<String> getClaim(String token, String claimName) {
         SignedJWT signedJWT;
         try {

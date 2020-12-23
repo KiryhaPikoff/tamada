@@ -1,6 +1,6 @@
 package ul.ulstu.tamada.client;
 
-import ul.ulstu.tamada.rest.dto.SmsDto;
+import ul.ulstu.tamada.rest.dto.auth.SmsDto;
 
 public interface ISmscClient {
 
