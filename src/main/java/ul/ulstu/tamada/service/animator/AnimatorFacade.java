@@ -50,7 +50,7 @@ public class AnimatorFacade implements IAnimatorFacade {
                .map(animator -> conversionService.convert(animator, AnimatorWithPhotoResponse.class))
                .peek(animatorWithPhoto -> {
                    var image = fileService.downloadFile(animatorWithPhoto.getId().toString(), FileType.ANIMATOR_PHOTO);
-                   animatorWithPhoto.setImage(Base64.encode(image).toString());
+                   animatorWithPhoto.setImage("data:image/jpeg;base64,"+Base64.encode(image).toString());
                })
                .collect(Collectors.toList());
 
