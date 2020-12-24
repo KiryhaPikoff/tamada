@@ -1,6 +1,7 @@
 package ul.ulstu.tamada.service.animator;
 
 import com.nimbusds.jose.util.Base64;
+import org.apache.tika.Tika;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,7 +51,8 @@ public class AnimatorFacade implements IAnimatorFacade {
                .map(animator -> conversionService.convert(animator, AnimatorWithPhotoResponse.class))
                .peek(animatorWithPhoto -> {
                    var image = fileService.downloadFile(animatorWithPhoto.getId().toString(), FileType.ANIMATOR_PHOTO);
-                   animatorWithPhoto.setImage("data:image/jpeg;base64,"+Base64.encode(image).toString());
+                   var fileMimeType = new Tika().detect(image);
+                   animatorWithPhoto.setImage("data:" + fileMimeType + ";base64,"+Base64.encode(image).toString());
                })
                .collect(Collectors.toList());
 
