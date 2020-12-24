@@ -94,7 +94,8 @@ public class AuthorizationAspect {
 
     private String obtainJwt() {
         try {
-            return ((Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getTokenValue();
+            var stringToken = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return ((Jwt) stringToken).getTokenValue();
         } catch (ClassCastException cce) {
             throw new TokenNotValidException();
         } catch (Exception exception) {

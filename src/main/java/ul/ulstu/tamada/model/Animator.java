@@ -3,6 +3,7 @@ package ul.ulstu.tamada.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 import ul.ulstu.tamada.model.enums.AnimatorStatus;
 
 import javax.persistence.*;
@@ -32,9 +33,11 @@ public class Animator {
     private Integer age;
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String description;
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String motto;
 
     private Integer price;

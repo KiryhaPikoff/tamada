@@ -1,8 +1,11 @@
 package ul.ulstu.tamada.service.file;
 
+import ul.ulstu.tamada.model.File;
+import ul.ulstu.tamada.model.enums.FileType;
+
 public interface IFileService {
 
-    void saveFile();
+    void uploadFile(File file);
 
-    void getFile(String fileName);
+    byte[] downloadFile(String fileName, FileType type);
 }
