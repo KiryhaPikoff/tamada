@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ul.ulstu.tamada.repository.IRefreshTokenRepository;
 import ul.ulstu.tamada.repository.IUserRepository;
 import ul.ulstu.tamada.service.auth.jwt.IJwtService;
 import ul.ulstu.tamada.service.auth.jwt.JwtService;
@@ -20,6 +21,7 @@ public class JwtServiceConfiguration {
     private final IUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final ConversionService conversionService;
+    private final IRefreshTokenRepository refreshTokenRepository;
 
     public JwtServiceConfiguration(
             IJwtExtractor jwtExtractor,
@@ -28,8 +30,8 @@ public class JwtServiceConfiguration {
             ITokenCreator tokenCreator,
             IUserRepository userRepository,
             PasswordEncoder passwordEncoder,
-            ConversionService conversionService
-    ) {
+            ConversionService conversionService,
+            IRefreshTokenRepository refreshTokenRepository) {
         this.jwtExtractor = jwtExtractor;
         this.customerTokenParametersFactory = customerTokenParametersFactory;
         this.adminTokenParametersFactory = adminTokenParametersFactory;
@@ -37,6 +39,7 @@ public class JwtServiceConfiguration {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.conversionService = conversionService;
+        this.refreshTokenRepository = refreshTokenRepository;
     }
 
     @Bean
@@ -48,6 +51,7 @@ public class JwtServiceConfiguration {
                 .userRepository(userRepository)
                 .passwordEncoder(passwordEncoder)
                 .conversionService(conversionService)
+                .refreshTokenRepository(refreshTokenRepository)
                 .build();
     }
 
@@ -60,6 +64,7 @@ public class JwtServiceConfiguration {
                 .userRepository(userRepository)
                 .passwordEncoder(passwordEncoder)
                 .conversionService(conversionService)
+                .refreshTokenRepository(refreshTokenRepository)
                 .build();
     }
 }

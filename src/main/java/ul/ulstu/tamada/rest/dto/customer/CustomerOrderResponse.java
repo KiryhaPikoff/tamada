@@ -1,4 +1,4 @@
-package ul.ulstu.tamada.rest.dto.order;
+package ul.ulstu.tamada.rest.dto.customer;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
-public class DetailedOrderResponse {
+public class CustomerOrderResponse {
 
     @ApiModelProperty("Идентификатор заказа")
     private Long id;
@@ -23,10 +23,7 @@ public class DetailedOrderResponse {
     private Date date;
 
     @ApiModelProperty("Краткая информация об аниматоре")
-    private OrderAnimatorResponse animator;
-
-    @ApiModelProperty("Краткая информация о заказчике")
-    private OrderUserResponse user;
+    private CustomerAnimatorResponse animator;
 
     @ApiModelProperty("Тип мероприятия")
     private EventType event;
@@ -43,4 +40,5 @@ public class DetailedOrderResponse {
 
     @ApiModelProperty("Статус заказа")
     private OrderStatus status;
+
 }

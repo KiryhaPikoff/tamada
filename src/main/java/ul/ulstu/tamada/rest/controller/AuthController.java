@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ul.ulstu.tamada.rest.dto.auth.*;
 import ul.ulstu.tamada.service.IAuthenticationFacade;
 
+import javax.validation.Valid;
+
 @Log4j2
 @RestController
 @RequestMapping("${base_uri}/auth/v1")
@@ -26,7 +28,7 @@ public class AuthController {
     @PostMapping("/register")
     @ApiOperation("Регистрация пользователя в системе")
     public ResponseEntity<RegistrationResponse> register(
-            @RequestBody RegistrationRequest registrationRequest
+            @RequestBody @Valid RegistrationRequest registrationRequest
     ) {
         var response = authenticationFacade.register(registrationRequest);
         return ResponseEntity.ok(response);
@@ -35,7 +37,7 @@ public class AuthController {
     @PostMapping("/check-code")
     @ApiOperation("Проверка ОТП кода с получением пары токенов")
     public ResponseEntity<TokenPairDto> checkCode(
-            @RequestBody CheckOtpDto checkOtpDto
+            @RequestBody @Valid CheckOtpDto checkOtpDto
     ) {
         var tokens = authenticationFacade.checkCode(checkOtpDto);
         return ResponseEntity.ok(tokens);
@@ -44,7 +46,7 @@ public class AuthController {
     @PostMapping("/tokens")
     @ApiOperation("Получение пары токенов по логину/паролю с указанием необходимой роли")
     public ResponseEntity<TokenPairDto> getTokensByCreds(
-            @RequestBody CredentialsDto credentialsDto
+            @RequestBody @Valid CredentialsDto credentialsDto
     ) {
         var tokens = authenticationFacade.getTokenPair(credentialsDto);
         return ResponseEntity.ok(tokens);
@@ -53,7 +55,7 @@ public class AuthController {
     @PostMapping("/refresh")
     @ApiOperation("Получение пары токенов по refresh токену")
     public ResponseEntity<TokenPairDto> getTokensByRefresh(
-            @RequestBody RefreshTokenDto refreshTokenDto
+            @RequestBody @Valid RefreshTokenDto refreshTokenDto
     ) {
         var refreshToken = refreshTokenDto.getRefresh();
         var tokens = authenticationFacade.getTokenPairByRefresh(refreshToken);

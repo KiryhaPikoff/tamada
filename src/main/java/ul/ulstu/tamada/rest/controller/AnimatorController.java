@@ -11,6 +11,7 @@ import ul.ulstu.tamada.rest.dto.animator.AnimatorsWithPhotoResponse;
 import ul.ulstu.tamada.rest.dto.animator.AnimatorsWithScheduleResponse;
 import ul.ulstu.tamada.service.animator.IAnimatorFacade;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Log4j2
@@ -26,7 +27,6 @@ public class AnimatorController {
         this.animatorFacade = animatorFacade;
     }
 
-    @AllowedUserRoles(roles = {UserRole.CUSTOMER, UserRole.ADMIN})
     @GetMapping
     @ApiOperation("Получение списка аниматоров с фотографиями")
     public ResponseEntity<AnimatorsWithPhotoResponse> getAnimatorsWithPhoto() {
@@ -60,7 +60,7 @@ public class AnimatorController {
     @ApiOperation("Изменение аниматора в системе")
     public ResponseEntity<Void> updateAnimator(
             @PathVariable Long animatorId,
-            @RequestBody AnimatorDto animator
+            @RequestBody @Valid AnimatorDto animator
     ) {
         animatorFacade.createOrUpdate(
                 Optional.ofNullable(animatorId),

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ul.ulstu.tamada.exception.UserAlreadyExistsException;
 import ul.ulstu.tamada.model.Customer;
+import ul.ulstu.tamada.model.enums.CustomerStatus;
 import ul.ulstu.tamada.repository.IUserRepository;
 import ul.ulstu.tamada.rest.dto.auth.RegistrationRequest;
 import ul.ulstu.tamada.rest.dto.auth.RegistrationResponse;
@@ -47,6 +48,8 @@ public class CustomerRegistrationService implements IRegistrationService {
         customer.setPassword(
                 passwordEncoder.encode(registrationRequest.getPassword())
         );
+
+        customer.setStatus(CustomerStatus.REGISTER_REQUEST);
 
         userRepository.save(customer);
 

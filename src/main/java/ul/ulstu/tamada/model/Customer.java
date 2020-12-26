@@ -1,6 +1,7 @@
 package ul.ulstu.tamada.model;
 
 import lombok.Data;
+import ul.ulstu.tamada.model.enums.CustomerStatus;
 
 import javax.persistence.*;
 import java.util.List;
@@ -18,4 +19,7 @@ public class Customer extends User {
             cascade = CascadeType.ALL
     )
     private List<Order> orders;
+
+    @Enumerated(EnumType.STRING)
+    private CustomerStatus status;
 }

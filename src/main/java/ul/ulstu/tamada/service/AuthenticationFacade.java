@@ -4,7 +4,12 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import ul.ulstu.tamada.configuration.enums.UserRole;
+import ul.ulstu.tamada.exception.CustomerNotFoundException;
 import ul.ulstu.tamada.exception.TokenNotValidException;
+import ul.ulstu.tamada.model.Customer;
+import ul.ulstu.tamada.model.UserType;
+import ul.ulstu.tamada.model.enums.CustomerStatus;
+import ul.ulstu.tamada.repository.IUserRepository;
 import ul.ulstu.tamada.rest.dto.auth.*;
 import ul.ulstu.tamada.service.auth.jwt.IJwtService;
 import ul.ulstu.tamada.service.auth.jwtextractor.IJwtExtractor;
@@ -21,6 +26,7 @@ public class AuthenticationFacade implements IAuthenticationFacade {
     private final ConversionService conversionService;
     private final IJwtExtractor jwtExtractor;
     private final IOtpService otpService;
+    private final IUserRepository userRepository;
 
     public AuthenticationFacade(
             IRegistrationService registrationService,
@@ -28,14 +34,15 @@ public class AuthenticationFacade implements IAuthenticationFacade {
             IJwtService adminJwtService,
             ConversionService conversionService,
             IJwtExtractor jwtExtractor,
-            IOtpService otpService
-    ) {
+            IOtpService otpService,
+            IUserRepository userRepository) {
         this.registrationService = registrationService;
         this.customerJwtService = customerJwtService;
         this.adminJwtService = adminJwtService;
         this.conversionService = conversionService;
         this.jwtExtractor = jwtExtractor;
         this.otpService = otpService;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -46,7 +53,11 @@ public class AuthenticationFacade implements IAuthenticationFacade {
 
     @Override
     public TokenPairDto checkCode(CheckOtpDto checkOtpDto) {
+        var customer = (Customer) userRepository.findByLogin(checkOtpDto.getPhone(), UserType.CUSTOMER)
+                .orElseThrow(() -> new CustomerNotFoundException(checkOtpDto.getPhone()));
         otpService.checkOtp(checkOtpDto);
+        customer.setStatus(CustomerStatus.APPROVED);
+        userRepository.save(customer);
         var tokens = customerJwtService.getTokenPairByIdent(checkOtpDto.getPhone());
         return tokens;
     }

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="20201224-0936" author="pikov_kirya@mail.ru">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="animators" />
+        </preConditions>
+        <comment>Create status column in customers table</comment>
+        <addColumn tableName="customers">
+            <column name="status" type="varchar(40)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20201224-0937" author="pikov_kirya@mail.ru">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="otp_codes" />
+            </not>
+        </preConditions>
+        <comment>Create OTP codes table</comment>
+        <createTable tableName="otp_codes">
+            <column name="id" type="varchar(12)">
+                <constraints nullable="false" primaryKey="true"  primaryKeyName="pk_otp"/>
+            </column>
+            <column name="phone" type="varchar(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="code" type="varchar(10)" remarks="Otp code"/>
+            <column name="blocked_until" type="timestamp"/>
+            <column name="available_attempts" type="int"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20201224-0938" author="pikov_kirya@mail.ru">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="refresh_token" />
+            </not>
+        </preConditions>
+        <comment>Create refresh token table</comment>
+        <createTable tableName="refresh_token">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="sub" type="varchar(15)"/>
+            <column name="issued_at" type="timestamp"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20201224-0939" author="pikov_kirya@mail.ru">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="otp_codes_seq" />
+            </not>
+        </preConditions>
+        <comment>Otp codes id sequence</comment>
+        <createSequence
+                incrementBy="1"
+                startValue="1"
+                minValue="1"
+                sequenceName="otp_codes_seq" />
+    </changeSet>
+
+    <changeSet id="20201224-0948" author="pikov_kirya@mail.ru">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="otp_codes" />
+                <columnExists tableName="otp_codes" columnName="phone"/>
+            </and>
+        </preConditions>
+        <modifyDataType tableName="otp_codes" columnName="phone" newDataType="varchar(12)"/>
+    </changeSet>
+
+</databaseChangeLog>

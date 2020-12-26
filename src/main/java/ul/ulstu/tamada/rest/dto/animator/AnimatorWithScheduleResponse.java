@@ -3,6 +3,7 @@ package ul.ulstu.tamada.rest.dto.animator;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -15,5 +16,5 @@ public class AnimatorWithScheduleResponse {
     private String name;
 
     @ApiModelProperty("Свободные для заказа даты аниматора в UNIX формате")
-    private List<Long> dates;
+    private List<Date> dates;
 }

@@ -1,13 +1,11 @@
 package ul.ulstu.tamada.service.order;
 
 import ul.ulstu.tamada.rest.dto.order.CreateOrderRequest;
-import ul.ulstu.tamada.rest.dto.order.DetailedOrderResponse;
-
-import java.util.List;
+import ul.ulstu.tamada.rest.dto.order.DetailedOrdersResponse;
 
 public interface IOrderService {
 
-    List<DetailedOrderResponse> findAllOrders();
+    DetailedOrdersResponse findAllOrders();
 
     void createOrder(String userLogin, CreateOrderRequest order);
 
