@@ -25,6 +25,6 @@ services:
 
 volumes:
   tmd-files-v:
-    driver: host
+    driver: local
     driver_opts:
       source: /home/pikov_kirya/volumes/tmd-files
