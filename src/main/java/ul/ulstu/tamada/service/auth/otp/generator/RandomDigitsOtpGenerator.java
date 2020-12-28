@@ -7,10 +7,10 @@ import java.util.Random;
 
 @Log4j2
 @Service
-public class RandomOtpGenerator implements IOtpGenerator {
+public class RandomDigitsOtpGenerator implements IOtpGenerator {
 
     @Override
-    public String generateOtp() {
+    public String generate() {
         StringBuilder otp = new StringBuilder();
         for (int i = 0; i < 6; i++) {
             otp.append(new Random().nextInt(9));

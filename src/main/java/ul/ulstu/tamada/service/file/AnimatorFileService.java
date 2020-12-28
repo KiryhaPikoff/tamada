@@ -13,12 +13,12 @@ import ul.ulstu.tamada.repository.IFileRepository;
 
 @Log4j2
 @Service
-public class AnimatorPhotosFileService implements IFileService {
+public class AnimatorFileService implements IFileService {
 
     private final IFileRepository fileRepository;
     private final FileServiceProperties fileServiceProperties;
 
-    public AnimatorPhotosFileService(
+    public AnimatorFileService(
             IFileRepository fileRepository,
             FileServiceProperties fileServiceProperties
     ) {
@@ -27,7 +27,7 @@ public class AnimatorPhotosFileService implements IFileService {
     }
 
     @Override
-    public void uploadFile(File file) {
+    public void save(File file) {
         file.setIdent(
                 file.getIdent() + "_" + file.getType()
         );
@@ -52,7 +52,7 @@ public class AnimatorPhotosFileService implements IFileService {
     }
 
     @Override
-    public byte[] downloadFile(String fileName, FileType type) {
+    public byte[] findByName(String fileName, FileType type) {
         return fileRepository.downloadFile(fileName + "_" + type);
     }
 }

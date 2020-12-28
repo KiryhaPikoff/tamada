@@ -5,7 +5,7 @@ import ul.ulstu.tamada.model.enums.FileType;
 
 public interface IFileService {
 
-    void uploadFile(File file);
+    void save(File file);
 
-    byte[] downloadFile(String fileName, FileType type);
+    byte[] findByName(String fileName, FileType type);
 }

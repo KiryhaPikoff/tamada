@@ -15,12 +15,9 @@ import ul.ulstu.tamada.rest.dto.animator.*;
 import ul.ulstu.tamada.service.animator.schedule.IScheduleService;
 import ul.ulstu.tamada.service.file.IFileService;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 
 @Service
 public class AnimatorFacade implements IAnimatorFacade {
@@ -50,7 +47,7 @@ public class AnimatorFacade implements IAnimatorFacade {
        var animators = animatorRepository.findAllByStatusIn(inStatuses).stream()
                .map(animator -> conversionService.convert(animator, AnimatorWithPhotoResponse.class))
                .peek(animatorWithPhoto -> {
-                   var image = fileService.downloadFile(animatorWithPhoto.getId().toString(), FileType.ANIMATOR_PHOTO);
+                   var image = fileService.findByName(animatorWithPhoto.getId().toString(), FileType.ANIMATOR_PHOTO);
                    var fileMimeType = new Tika().detect(image);
                    animatorWithPhoto.setImage("data:" + fileMimeType + ";base64,"+Base64.encode(image).toString());
                })
@@ -90,7 +87,7 @@ public class AnimatorFacade implements IAnimatorFacade {
         animatorPhoto.setData(animatorDto.getImage());
         animatorPhoto.setType(FileType.ANIMATOR_PHOTO);
 
-        fileService.uploadFile(animatorPhoto);
+        fileService.save(animatorPhoto);
     }
 
     @Override

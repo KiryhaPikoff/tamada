@@ -7,5 +7,5 @@ public interface ICustomerService {
 
     CustomerInfoDto getCustomerInfo(String phone);
 
-    void updateCustomer(String phone, UpdateCustomerDto customerDto);
+    void createOrUpdate(String phone, UpdateCustomerDto customerDto);
 }

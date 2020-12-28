@@ -42,7 +42,7 @@ public class UserController {
             @AuthenticationPrincipal Jwt jwt,
             @RequestBody @Valid UpdateCustomerDto customerDto
             ) {
-        customerService.updateCustomer(jwt.getSubject(), customerDto);
+        customerService.createOrUpdate(jwt.getSubject(), customerDto);
         return ResponseEntity.ok().build();
     }
 }

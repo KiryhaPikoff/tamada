@@ -36,7 +36,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public void updateCustomer(String phone, UpdateCustomerDto customerDto) {
+    public void createOrUpdate(String phone, UpdateCustomerDto customerDto) {
         var customer = (Customer) userRepository.findByLogin(phone, UserType.CUSTOMER)
                 .orElseThrow(() -> new CustomerNotFoundException(phone));
 

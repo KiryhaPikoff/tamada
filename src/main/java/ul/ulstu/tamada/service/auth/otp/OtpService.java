@@ -12,8 +12,6 @@ import ul.ulstu.tamada.rest.dto.auth.CheckOtpDto;
 import ul.ulstu.tamada.rest.dto.auth.OtpDto;
 import ul.ulstu.tamada.service.auth.otp.generator.IOtpGenerator;
 
-import java.time.Duration;
-
 @Service
 public class OtpService implements IOtpService {
 
@@ -31,7 +29,7 @@ public class OtpService implements IOtpService {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
     public OtpDto getOtp(String phone) {
-        var code = otpGenerator.generateOtp();
+        var code = otpGenerator.generate();
 
         var otp = new Otp();
         otp.setAvailableAttempts(ATTEMPTS);

@@ -21,13 +21,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-public class ScheduleService implements IScheduleService {
+public class AnimatorsScheduleService implements IScheduleService {
 
     private final IAnimatorRepository animatorRepository;
     private final ConversionService conversionService;
     private final AnimatorScheduleProperties animatorScheduleProperties;
 
-    public ScheduleService(
+    public AnimatorsScheduleService(
             IAnimatorRepository animatorRepository,
             ConversionService conversionService,
             AnimatorScheduleProperties animatorScheduleProperties
