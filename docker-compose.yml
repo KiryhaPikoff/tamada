@@ -29,3 +29,4 @@ volumes:
     driver_opts:
       type: none
       device: /home/pikov_kirya/volumes/tmd-files
+      o: bind
