@@ -21,12 +21,4 @@ services:
     ports:
       - 50040:50040
     volumes:
-      - tmd-files-v:/tmd-files
-
-volumes:
-  tmd-files-v:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/pikov_kirya/volumes/tmd-files
-      o: bind
+      - /data/tmd-files:/tmd-files
