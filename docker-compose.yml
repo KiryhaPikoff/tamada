@@ -27,4 +27,4 @@ volumes:
   tmd-files-v:
     driver: local
     driver_opts:
-      source: /home/pikov_kirya/volumes/tmd-files
+      device: /home/pikov_kirya/volumes/tmd-files
