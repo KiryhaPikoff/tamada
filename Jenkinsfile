@@ -18,6 +18,7 @@ pipeline {
     }
     stage('Create shared folder /tmd-files') {
       steps {
+        sh "sudo ls"
         sh "sudo mkdir tmd-files"
         sh "sudo ls"
       }
