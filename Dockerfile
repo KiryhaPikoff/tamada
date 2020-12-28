@@ -7,8 +7,6 @@ RUN mvn package -DskipTests
 
 WORKDIR /home/app
 
-VOLUME /tmd-files
-
 RUN mv /home/tmp/target/* /home/app; \
     rm -rf /home/tmp
 

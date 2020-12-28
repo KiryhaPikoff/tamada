@@ -60,7 +60,10 @@ public class FileRepository implements IFileRepository {
             throw new FileLoadingException();
         };
 
-        return new FileInputStream(fullFilePath.get()).readAllBytes();
+        var fis = new FileInputStream(fullFilePath.get());
+        var bytes = fis.readAllBytes();
+        fis.close();
+        return bytes;
     }
 
     private Optional<String> searchFile(String fileName) {
