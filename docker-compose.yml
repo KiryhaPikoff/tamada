@@ -22,3 +22,9 @@ services:
       - 50040:50040
     volumes:
       - tmd-files-v:/tmd-files
+
+volumes:
+  data:
+    driver: host
+    driver_opts:
+      source: /home/pikov_kirya/volumes/tmd-files
