@@ -21,7 +21,7 @@ services:
     ports:
       - 50040:50040
     volumes:
-      - files:/tmd-files
+      - files:.
 
 volumes:
   files:
