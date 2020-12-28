@@ -16,6 +16,11 @@ pipeline {
         sh "sudo cp /home/pikov_kirya/application-prod.properties ./src/main/resources/"
       }
     }
+    stage('Create shared folder /tmd-files') {
+      steps {
+        sh "sudo mkdir tmd-files"
+      }
+    }
     stage('Build application') {
       steps {
         sh "sudo docker-compose build"
