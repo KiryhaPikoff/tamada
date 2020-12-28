@@ -19,6 +19,7 @@ pipeline {
     stage('Create shared folder /tmd-files') {
       steps {
         sh "sudo mkdir tmd-files"
+        sh "sudo ls"
       }
     }
     stage('Build application') {
