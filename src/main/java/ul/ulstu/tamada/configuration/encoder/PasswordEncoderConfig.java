@@ -11,11 +11,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class PasswordEncoderConfig {
 
-    private static final Integer DEFAULT_STRENGTH = 15;
-
     @Bean
     @SneakyThrows
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(DEFAULT_STRENGTH);
+        return new BCryptPasswordEncoder();
     }
 }
