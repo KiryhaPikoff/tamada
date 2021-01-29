@@ -1,4 +1,4 @@
-package ul.ulstu.tamada.service;
+package ul.ulstu.tamada.service.auth;
 
 import ul.ulstu.tamada.rest.dto.auth.*;
 

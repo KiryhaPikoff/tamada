@@ -1,4 +1,4 @@
-package ul.ulstu.tamada.service;
+package ul.ulstu.tamada.service.auth;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.convert.ConversionService;

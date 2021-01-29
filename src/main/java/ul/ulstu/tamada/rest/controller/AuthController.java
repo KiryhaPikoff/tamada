@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ul.ulstu.tamada.rest.dto.auth.*;
-import ul.ulstu.tamada.service.IAuthenticationFacade;
+import ul.ulstu.tamada.service.auth.IAuthenticationFacade;
 
 import javax.validation.Valid;
 
