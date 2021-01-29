@@ -1,5 +1,7 @@
 package ul.ulstu.tamada.configuration.resttemplate.interceptor;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
@@ -12,7 +14,10 @@ import java.nio.charset.StandardCharsets;
 
 @Log4j2
 @Component
+@RequiredArgsConstructor
 public class RestTemplateLoggingInterceptor implements ClientHttpRequestInterceptor {
+
+    private final ObjectMapper objectMapper;
 
     @Override
     public ClientHttpResponse intercept(HttpRequest httpRequest, byte[] bytes, ClientHttpRequestExecution clientHttpRequestExecution) throws IOException {

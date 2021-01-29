@@ -1,6 +1,7 @@
 package ul.ulstu.tamada.configuration.logging;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -13,7 +14,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 @Log4j2
 @ControllerAdvice
+@RequiredArgsConstructor
 public class ResponseLoggingInterceptor implements ResponseBodyAdvice<Object> {
+
+    private final ObjectMapper objectMapper;
 
     @Override
     public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass) {
@@ -30,7 +34,6 @@ public class ResponseLoggingInterceptor implements ResponseBodyAdvice<Object> {
         var isServletHttpResponse = serverHttpResponse instanceof ServletServerHttpResponse;
         if (isServletHttpResponse) {
             try {
-                var objectMapper = new ObjectMapper();
                 var contentType = mediaType.toString();
                 var isJsonOrText = contentType.contains("json") || contentType.contains("text");
                 log.info(System.lineSeparator() +
