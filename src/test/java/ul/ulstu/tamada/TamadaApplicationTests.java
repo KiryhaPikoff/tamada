@@ -1,13 +1,17 @@
 package ul.ulstu.tamada;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-@SpringBootTest
+@RunWith(JUnitPlatform.class)
+@DataJpaTest
 class TamadaApplicationTests {
 
     @Test
-    void contextLoads() {
+    void twoPlusTwoEqualsFour() {
+        Assertions.assertEquals(4, 2 + 2);
     }
-
 }
